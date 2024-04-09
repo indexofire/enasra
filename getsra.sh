@@ -59,13 +59,6 @@ function get_fastq {
 
 for i in $(cat $INPUT);
 do
-    if [ ${#i} -gt 10 ]; then
-        j="0${i:0-2:2}/"
-    elif [ ${#i} -eq 10 ]; then
-        j="00${i:0-1:1}/"
-    else
-        j=""
-    fi
     get_fastq ${i}
     check_md5 ${i}
 done
