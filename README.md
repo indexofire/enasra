@@ -4,13 +4,17 @@ Enasra is a tool to download WGS PE raw data from ENA.
 
 ## Usage
 
-**Install**
+**Installation**
 
 ```shell
+# install requirements
 $ mamba install aspera-cli curl
+
+# download enasra
+$ git clone https://github.com/indexofire/enasra.git
 ```
 
-**download**
+**Download data**
 
 ```shell
 # create list or you can download a list from NCBI
