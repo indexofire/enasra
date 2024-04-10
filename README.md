@@ -18,12 +18,19 @@ $ git clone https://github.com/indexofire/enasra.git
 
 ```shell
 # create list or you can download a list from NCBI
-$ echo -e "DRR123021\nERR1351990" > list
+$ echo -e "DRR178303\nERR044749\nERR2668680" > list
 
 # run pipeline to download
-$ ./getend.sh -i list -d output
-# or you want to run it backend
-$ nohup ./getend.sh -i list -d output &
+$ ./getsra.sh -i list -d output
 
-# check md5sum result
-$ cat output/enasra.log
+# or you want to run it backend
+$ nohup ./getsra.sh -i list -d output &
+```
+
+**Checksum**
+
+```shell
+# md5sum check
+$ cd output
+$ md5sum -c md5sum.txt
+```
