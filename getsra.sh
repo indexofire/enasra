@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 # Usage:
-# getsra.sh -i list.txt -d diretory
+# getsra.sh -m ascp -i list.txt -d diretory
 # list.txt is the names of SRA accession list in a text file
 # direcotry is the folder name to save fastq files
 
-while getopts i:d: ARGS
+while getopts m:i:d: ARGS
 do
     case $ARGS in
+	m)
+	    METHOD=$OPTARG;;
         i)
             INPUT=$OPTARG;;
         d)
             OUTPUT=$OPTARG;;
         ?)
-            echo "`basename $0` usage: [-i input file] | [-d output directory]"
+            echo "`basename $0` usage: [-m download method] [-i input file] | [-d output directory]"
             exit 2;;
     esac
 done
@@ -45,9 +47,12 @@ function get_fastq {
     fi
     for pe in 1 2
     do if [ ! -f "${OUTPUT}/${1}_${pe}.fastq.gz" ]; then
-	ascp -T -l 300m -P33001 -i ${SSH_FILE} era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/${1:0:6}/${nf}${1}/${1}_${pe}.fastq.gz ${OUTPUT}/${1}_${pe}.fastq.gz
+	if [[ ${METHOD} == "ftp" ]]; then
+	    aria2c ftp://ftp.sra.ebi.ac.uk/vol1/fastq/${1:0:6}/${nf}${1}/${1}_${pe}.fastq.gz -d ${OUTPUT}
+	else
+	    ascp -T -l 300m -P33001 -i ${SSH_FILE} era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/${1:0:6}/${nf}${1}/${1}_${pe}.fastq.gz ${OUTPUT}/${1}_${pe}.fastq.gz
+	fi
     fi
-    sleep 3
     done
 }
 
