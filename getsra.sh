@@ -47,11 +47,14 @@ function get_fastq {
     do if [ ! -f "${OUTPUT}/${1}_${pe}.fastq.gz" ]; then
 	ascp -T -l 300m -P33001 -i ${SSH_FILE} era-fasp@fasp.sra.ebi.ac.uk:vol1/fastq/${1:0:6}/${nf}${1}/${1}_${pe}.fastq.gz ${OUTPUT}/${1}_${pe}.fastq.gz
     fi
+    sleep 3
     done
 }
 
 for i in $(cat $INPUT);
 do
     get_fastq ${i}
-    get_md5 ${i}
+    if [[ $(grep -n ${i} ${OUTPUT}/md5sum.txt | wc -l) < 2 ]]; then
+	get_md5 ${i}
+    fi
 done
