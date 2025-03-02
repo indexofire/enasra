@@ -21,13 +21,10 @@ $ git clone https://github.com/indexofire/enasra.git
 $ echo -e "DRR178303\nERR044749\nERR2668680" > list
 
 # run pipeline to download
-$ ./getsra.sh -i list -d output
+$ ./get_enafq.sh -i list
 
-# download via ftp, use aria2c to download
-$ ./getsra -m ftp -i list -d output
-
-# or you want to run it backend
-$ nohup ./getsra.sh -i list -d output &
+# download via ftp, use wget to download
+$ ./get_enafq.sh -m ftp -t wget -i list -d output
 ```
 
 **Checksum**
@@ -35,5 +32,5 @@ $ nohup ./getsra.sh -i list -d output &
 ```shell
 # md5sum check
 $ cd output
-$ md5sum -c md5sum.txt
+$ for i in *.txt; do md5sum -c $i; done | grep -v OK
 ```
