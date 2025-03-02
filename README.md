@@ -23,7 +23,10 @@ $ echo -e "DRR178303\nERR044749\nERR2668680" > list
 # run pipeline to download
 $ ./get_enafq.sh -i list
 
-# download via ftp, use wget to download
+# run pipeline to download in 2 connections
+$ ./get_enafq.sh -i list -j2
+
+# use wget to download via ftp method
 $ ./get_enafq.sh -m ftp -t wget -i list -d output
 ```
 
